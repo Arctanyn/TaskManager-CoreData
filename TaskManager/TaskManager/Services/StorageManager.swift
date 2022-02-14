@@ -24,24 +24,16 @@ class StorageManager {
         else { return }
         changeData(of: myNewTask, from: task)
         if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error {
-                print(error)
-            }
+            saveContext()
         }
     }
     
     func update(task: AssignedTask, at index: Int) {
         guard let tasks = fetchData() else { return }
-        let myTask = tasks[index]
-        changeData(of: myTask, from: task)
+        let updatingTask = tasks[index]
+        changeData(of: updatingTask, from: task)
         if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error {
-                print(error)
-            }
+            saveContext()
         }
     }
     
@@ -60,11 +52,7 @@ class StorageManager {
         guard let tasks = fetchData() else { return }
         let task = tasks[index]
         context.delete(task)
-        do {
-            try context.save()
-        } catch let error {
-            print(error)
-        }
+        saveContext()
     }
     
     func deleteAll() {
@@ -89,6 +77,14 @@ class StorageManager {
         model.priority = task.priority.rawValue
         model.isHaveActiveTime = task.isHaveActiveTime
         model.isHaveActiveDate = task.isHaveActiveDate
+    }
+    
+    private func saveContext() {
+        do {
+            try context.save()
+        } catch let error {
+            print(error)
+        }
     }
     
 }

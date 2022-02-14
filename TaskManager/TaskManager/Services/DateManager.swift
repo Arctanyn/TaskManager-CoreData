@@ -10,8 +10,6 @@ import Foundation
 class DateManager {
     
     //MARK: Properties
-    
-    static let shared = DateManager()
     private let calendar = Calendar.current
     private var authomaticTimeComponents: DateComponents
     

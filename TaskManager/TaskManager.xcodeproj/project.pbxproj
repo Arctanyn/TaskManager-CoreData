@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B16487727B5B422005D9D8F /* Extension + TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16487627B5B422005D9D8F /* Extension + TaskViewController.swift */; };
+		3B16487727B5B422005D9D8F /* Extension + TaskInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16487627B5B422005D9D8F /* Extension + TaskInfoViewController.swift */; };
 		3B19FB9F27B7DB370090BBD6 /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B19FB9E27B7DB370090BBD6 /* Extension + Date.swift */; };
 		3B19FBA327B803AD0090BBD6 /* TaskPriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B19FBA227B803AD0090BBD6 /* TaskPriorityViewController.swift */; };
 		3B19FBA527B804F00090BBD6 /* TaskPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B19FBA427B804F00090BBD6 /* TaskPriorityCell.swift */; };
@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B16487627B5B422005D9D8F /* Extension + TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + TaskViewController.swift"; sourceTree = "<group>"; };
+		3B16487627B5B422005D9D8F /* Extension + TaskInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + TaskInfoViewController.swift"; sourceTree = "<group>"; };
 		3B19FB9E27B7DB370090BBD6 /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
 		3B19FBA227B803AD0090BBD6 /* TaskPriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPriorityViewController.swift; sourceTree = "<group>"; };
 		3B19FBA427B804F00090BBD6 /* TaskPriorityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPriorityCell.swift; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 		3B16487527B5B3D6005D9D8F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3B16487627B5B422005D9D8F /* Extension + TaskViewController.swift */,
+				3B16487627B5B422005D9D8F /* Extension + TaskInfoViewController.swift */,
 				3B19FB9E27B7DB370090BBD6 /* Extension + Date.swift */,
 			);
 			path = Extensions;
@@ -231,7 +231,7 @@
 				3B38705427B5632700D3261B /* AppDelegate.swift in Sources */,
 				3B19FBA527B804F00090BBD6 /* TaskPriorityCell.swift in Sources */,
 				3B51801D27B92DBA00F14BCC /* StorageManager.swift in Sources */,
-				3B16487727B5B422005D9D8F /* Extension + TaskViewController.swift in Sources */,
+				3B16487727B5B422005D9D8F /* Extension + TaskInfoViewController.swift in Sources */,
 				3B38706E27B563AB00D3261B /* TaskListViewController.swift in Sources */,
 				3B19FBA327B803AD0090BBD6 /* TaskPriorityViewController.swift in Sources */,
 				3B3C5B1D27B597ED0083459B /* TaskListViewControllerDelegate.swift in Sources */,

@@ -21,7 +21,7 @@ class TaskInfoViewController: UITableViewController {
     //MARK: Properties
     
     weak var saveTaskDelegate: TaskListViewControllerDelegate?
-
+    private let dateManager = DateManager()
     private var priority: AssignedTaskPriority = .standard {
         didSet {
             taskPriorityLabel.text = priority.rawValue
@@ -87,7 +87,7 @@ class TaskInfoViewController: UITableViewController {
                     return
                 }
                 if !self.timeForTaskSwitch.isOn {
-                    self.date = DateManager.shared.setDefaultTime(for: date)
+                    self.date = self.dateManager.setDefaultTime(for: date)
                 } else {
                     self.date = date
                 }
@@ -111,7 +111,7 @@ class TaskInfoViewController: UITableViewController {
             }
             taskTimeLabel.textColor = .systemBlue
         } else {
-            date = DateManager.shared.setDefaultTime(for: date)
+            self.date = self.dateManager.setDefaultTime(for: date)
             taskTimeLabel.text = Date().timeToString()
             taskTimeLabel.textColor = .lightGray
         }
@@ -146,8 +146,10 @@ class TaskInfoViewController: UITableViewController {
         switch saveProcess {
         case .add:
             saveButton.title = "Добавить"
+            self.title = "Новая задача"
         case .edit:
             saveButton.title = "Сохранить"
+            self.title = task?.name
             guard let task = task else { return }
             priority = task.priority
             timeForTaskSwitch.isOn = task.isHaveActiveTime
