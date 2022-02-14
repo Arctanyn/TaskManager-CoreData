@@ -1,6 +1,8 @@
 # TaskManager-CoreData
 Swift IOS Application
 
+![Icon-App-60x60@3x](https://user-images.githubusercontent.com/81229461/153829856-5fba58f6-3a7b-4b6b-b662-6cae22235d2e.png)
+
 The application was created primarily to familiarize with the CoreData framework and gain knowledge to work with it. 
 
 Task Manager is an application for scheduling tasks of varying degrees of importance. It allows you to add the tasks you plan to the general list. 
