@@ -80,7 +80,8 @@ class TaskInfoViewController: UITableViewController {
     
     @objc private func switchSetTaskDate(_ sender: UISwitch) {
         if dateForTaskSwitch.isOn {
-            showDatePickerAlert(mode: .date, currentDate: date) { date in
+            showDatePickerAlert(mode: .date, currentDate: date) { [weak self] date in
+                guard let self = self else { return }
                 guard let date = date else {
                     self.dateForTaskSwitch.isOn = false
                     self.taskDateLabel.textColor = .lightGray
@@ -101,7 +102,8 @@ class TaskInfoViewController: UITableViewController {
     
     @objc private func switchSetTaskTime(_ sender: UISwitch) {
         if timeForTaskSwitch.isOn {
-            showDatePickerAlert(mode: .time, currentDate: date) { date in
+            showDatePickerAlert(mode: .time, currentDate: date) { [weak self] date in
+                guard let self = self else { return }
                 guard let date = date else {
                     self.timeForTaskSwitch.isOn = false
                     self.taskTimeLabel.textColor = .lightGray
@@ -122,8 +124,10 @@ class TaskInfoViewController: UITableViewController {
     @IBAction func saveTask(_ sender: UIBarButtonItem) {
         let createdTask = createTask()
         print(createdTask)
-        dismiss(animated: true) { [saveTaskDelegate, saveProcess] in
-            saveTaskDelegate?.save(task: createdTask, process: saveProcess)
+        dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.saveTaskDelegate?.save(task: createdTask,
+                                        process: self.saveProcess)
         }
     }
     

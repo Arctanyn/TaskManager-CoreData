@@ -42,7 +42,10 @@ class TaskCell: UITableViewCell {
         
         completeTaskButton.setImage(UIImage(systemName: "circle"), for: .normal)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(completeTaskButtonTapGesture(_:)))
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(completeTaskButtonTapGesture(_:))
+        )
         completeTaskButton.addGestureRecognizer(tapGesture)
     }
     

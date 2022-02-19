@@ -80,8 +80,8 @@ class TaskListViewController: UIViewController {
     }
     
     private func deleteTask(at indexPath: IndexPath) {
-        let index = (assignedTasks.count - 1) - indexPath.row
-        StorageManager.shared.delete(at: index)
+        let deletingTask = assignedTasks[indexPath.row]
+        StorageManager.shared.delete(task: deletingTask)
         assignedTasks.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
@@ -133,14 +133,11 @@ extension TaskListViewController: UITableViewDelegate {
     private func deleteSwipeAction(at indexPath: IndexPath) -> UIContextualAction {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] action, view, completion in
             self?.deleteTask(at: indexPath)
+            completion(true)
         }
         deleteAction.backgroundColor = .red
         deleteAction.image = UIImage(systemName: "trash")
         return deleteAction
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(assignedTasks.reversed()[indexPath.row])
     }
 }
 
@@ -156,11 +153,12 @@ extension TaskListViewController: TaskListViewControllerDelegate {
             tableView.insertRows(at: [indexPath], with: .automatic)
         case .edit:
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            assignedTasks[indexPath.row] = task
+            let oldTask = assignedTasks[indexPath.row]
             StorageManager.shared.update(
-                task: task,
-                at: (assignedTasks.count - 1) - indexPath.row
+                task: oldTask,
+                to: task
             )
+            assignedTasks[indexPath.row] = task
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }

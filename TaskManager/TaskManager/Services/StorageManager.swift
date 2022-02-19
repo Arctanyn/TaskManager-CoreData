@@ -20,18 +20,26 @@ class StorageManager {
     func save(_ task: AssignedTask) {
         guard
             let entityDescription = NSEntityDescription.entity(forEntityName: "MyTask", in: context),
-            let myNewTask = NSManagedObject(entity: entityDescription, insertInto: context) as? MyTask
+            let myTask = NSManagedObject(entity: entityDescription, insertInto: context) as? MyTask
         else { return }
-        changeData(of: myNewTask, from: task)
+        
+        myTask.name = task.name
+        myTask.taskDescription = task.description
+        myTask.url = task.url
+        myTask.date = task.date
+        myTask.priority = task.priority.rawValue
+        myTask.isHaveActiveTime = task.isHaveActiveTime
+        myTask.isHaveActiveDate = task.isHaveActiveDate
+        
         if context.hasChanges {
             saveContext()
         }
     }
     
-    func update(task: AssignedTask, at index: Int) {
-        guard let tasks = fetchData() else { return }
-        let updatingTask = tasks[index]
-        changeData(of: updatingTask, from: task)
+    func update(task: AssignedTask, to newTask: AssignedTask) {
+        findObjectInStorage(with: task) { [unowned self] myTask in
+            myTask.setValuesForKeys(self.changeData(from: newTask))
+        }
         if context.hasChanges {
             saveContext()
         }
@@ -48,10 +56,10 @@ class StorageManager {
         }
     }
     
-    func delete(at index: Int) {
-        guard let tasks = fetchData() else { return }
-        let task = tasks[index]
-        context.delete(task)
+    func delete(task: AssignedTask) {
+        findObjectInStorage(with: task) { [context] myTask in
+            context.delete(myTask)
+        }
         saveContext()
     }
     
@@ -69,14 +77,18 @@ class StorageManager {
     
     //MARK: - Private methods
     
-    private func changeData(of model: MyTask, from task: AssignedTask) {
-        model.name = task.name
-        model.taskDescription = task.description
-        model.url = task.url
-        model.date = task.date
-        model.priority = task.priority.rawValue
-        model.isHaveActiveTime = task.isHaveActiveTime
-        model.isHaveActiveDate = task.isHaveActiveDate
+    private func changeData(from task: AssignedTask) -> [String: Any] {
+        var parameters = [String: Any]()
+        
+        parameters["name"] = task.name
+        parameters["taskDescription"] = task.description
+        parameters["url"] = task.url
+        parameters["date"] = task.date
+        parameters["priority"] = task.priority.rawValue
+        parameters["isHaveActiveTime"] = task.isHaveActiveTime
+        parameters["isHaveActiveDate"] = task.isHaveActiveDate
+        
+        return parameters
     }
     
     private func saveContext() {
@@ -87,4 +99,31 @@ class StorageManager {
         }
     }
     
-}
+    private func checkForEquality(storedModel: MyTask, task: AssignedTask) -> Bool {
+        guard
+            storedModel.name == task.name,
+            storedModel.priority == task.priority.rawValue,
+            storedModel.taskDescription == task.description,
+            storedModel.url == task.url,
+            storedModel.date == task.date
+        else { return false }
+        return true
+    }
+    
+    private func findObjectInStorage(with task: AssignedTask, completion: @escaping (MyTask) -> Void) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MyTask")
+        fetchRequest.predicate = NSPredicate(format: "name = %@", task.name)
+        
+        do {
+            guard let results = try context.fetch(fetchRequest) as? [NSManagedObject] else { return }
+            if !results.isEmpty {
+                guard let myTask = results.first as? MyTask,
+                      checkForEquality(storedModel: myTask, task: task)
+                else { return }
+                completion(myTask)
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+ }
